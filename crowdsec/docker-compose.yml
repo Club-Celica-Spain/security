@@ -1,34 +1,35 @@
 version: '3.7'
-  services:
-    crowdsec:
-      image: crowdsecurity/crowdsec:v1.3.4
-      container_name: crowdsec
-      restart: always
-      networks:
-        - wan
-      volumes:
-        - ./config/acquis.yaml:/etc/crowdsec/acquis.yaml
-        - crowdsec-db:/var/lib/crowdsec/data/
-        - crowdsec-config:/etc/crowdsec/
-        - /var/log/traefik:/var/log/traefik/:ro
-      environment:
-        GID: ${GID}
-        COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik"
 
-    bouncer-traefik:
-      image: fbonalair/traefik-crowdsec-bouncer:0.3.5
-      container_name: bouncer-traefik
-      restart: always
-      networks:
-        - wan
-      environment:
-        CROWDSEC_BOUNCER_API_KEY: ${API_KEY}
-        CROWDSEC_AGENT_HOST: crowdsec:8080
-        PORT: 6085
-        GIN_MODE: release
-        TRUSTED_PROXIES: '127.0.0.1/8'
-      depends_on:
-        - crowdsec
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:v1.3.4
+    container_name: crowdsec
+    restart: always
+    networks:
+      - wan
+    volumes:
+      - ./config/acquis.yaml:/etc/crowdsec/acquis.yaml
+      - crowdsec-db:/var/lib/crowdsec/data/
+      - crowdsec-config:/etc/crowdsec/
+      - /var/log/traefik:/var/log/traefik/:ro
+    environment:
+      GID: ${GID}
+      COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik"
+
+  bouncer-traefik:
+    image: fbonalair/traefik-crowdsec-bouncer:0.3.5
+    container_name: bouncer-traefik
+    restart: always
+    networks:
+      - wan
+    environment:
+      CROWDSEC_BOUNCER_API_KEY: ${API_KEY}
+      CROWDSEC_AGENT_HOST: crowdsec:8080
+      PORT: 6085
+      GIN_MODE: release
+      TRUSTED_PROXIES: '127.0.0.1/8'
+    depends_on:
+      - crowdsec
 
 volumes:
   crowdsec-db:
