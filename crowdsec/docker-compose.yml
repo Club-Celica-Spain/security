@@ -14,7 +14,7 @@ services:
       - /var/log/traefik:/var/log/traefik/:ro
     environment:
       GID: ${GID}
-      COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik"
+      COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/whitelist-good-actors"
     security_opt:
       - no-new-privileges=true
 
