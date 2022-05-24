@@ -27,7 +27,6 @@ services:
       CROWDSEC_AGENT_HOST: crowdsec:8080
       PORT: 6085
       GIN_MODE: release
-      TRUSTED_PROXIES: '127.0.0.1/8'
     depends_on:
       - crowdsec
 
