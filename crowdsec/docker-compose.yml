@@ -14,7 +14,10 @@ services:
       - /var/log/traefik:/var/log/traefik/:ro
     environment:
       GID: ${GID}
-      COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik"
+      COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/whitelist-good-actors"
+      CUSTOM_HOSTNAME: "Club Celica España"
+    security_opt:
+      - no-new-privileges=true
 
   bouncer-traefik:
     image: fbonalair/traefik-crowdsec-bouncer:0.3.5
@@ -27,9 +30,10 @@ services:
       CROWDSEC_AGENT_HOST: crowdsec:8080
       PORT: 6085
       GIN_MODE: release
-      TRUSTED_PROXIES: '127.0.0.1/8'
     depends_on:
       - crowdsec
+    security_opt:
+      - no-new-privileges=true
 
 volumes:
   crowdsec-db:
