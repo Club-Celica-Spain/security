@@ -15,6 +15,7 @@ services:
     environment:
       GID: ${GID}
       COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/whitelist-good-actors"
+      CUSTOM_HOSTNAME: "Club Celica España"
     security_opt:
       - no-new-privileges=true
 
